@@ -133,103 +133,24 @@
 
     .github-link svg { width: 16px; height: 16px; }
 
-    main { padding: 72px 0 74px; text-align: center; }
-
-    .eyebrow {
-      display: inline-flex;
+    main {
+      display: grid;
+      min-height: calc(100vh - 142px);
       align-items: center;
-      gap: 8px;
-      margin: 0 0 18px;
-      padding: 8px 13px;
-      border: 1px solid rgba(147,222,255,.27);
-      border-radius: 999px;
-      background: linear-gradient(145deg, rgba(34,89,147,.32), rgba(12,34,73,.44));
-      box-shadow: inset 0 1px 0 rgba(213,244,255,.17), 0 6px 22px rgba(0,9,35,.16);
-      color: #9ceaff;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      backdrop-filter: blur(8px);
-    }
-
-    .eyebrow::before {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #75d78e;
-      box-shadow: 0 0 0 3px rgba(117,215,142,.18), 0 0 9px rgba(85,196,119,.75);
-      content: "";
-    }
-
-    h1 {
-      margin: 0;
-      color: #e5f5ff;
-      font-size: clamp(42px, 7vw, 76px);
-      font-weight: 800;
-      letter-spacing: -.075em;
-      line-height: 1.02;
-      text-shadow: 0 2px 16px rgba(80,187,255,.22);
-    }
-
-    h1 span {
-      color: #69ddff;
-      background: linear-gradient(180deg, #c0f8ff 6%, #57d9ff 48%, #459cff 100%);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .intro {
-      max-width: 510px;
-      margin: 19px auto 0;
-      color: #a8cbe8;
-      font-size: 15px;
-      line-height: 1.7;
+      padding: 20px 0;
     }
 
     .world {
-      margin-top: 48px;
-      padding: 25px 28px 31px;
-      border: 1px solid rgba(148,213,255,.23);
-      border-radius: 34px;
-      background: linear-gradient(140deg, rgba(54,113,178,.2), rgba(9,30,65,.48) 52%, rgba(12,72,111,.21));
-      box-shadow: inset 0 1px 0 rgba(214,243,255,.17), inset 0 0 38px rgba(43,147,220,.07), 0 20px 55px rgba(0,4,18,.3);
-      backdrop-filter: blur(14px);
-    }
-
-    .world-heading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 21px;
-      text-align: left;
-    }
-
-    h2 {
-      margin: 0;
-      color: #dcf4ff;
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: -.025em;
-    }
-
-    .project-count {
-      padding: 6px 10px;
-      border: 1px solid rgba(160,224,255,.23);
-      border-radius: 999px;
-      background: rgba(53,116,173,.2);
-      color: #aadcf5;
-      font-size: 10px;
-      font-weight: 700;
+      width: 100%;
     }
 
     .project-grid {
       display: flex;
-      align-items: flex-start;
+      min-height: 60vh;
+      align-items: center;
       justify-content: center;
-      gap: clamp(40px, 10vw, 130px);
-      padding: 7px 0 2px;
+      gap: clamp(60px, 15vw, 210px);
+      padding: 25px 0;
     }
 
     .project-card {
@@ -386,24 +307,6 @@
       color: #8deaff;
     }
 
-    .project-type {
-      margin-top: 4px;
-      color: #a5c9e5;
-      font-size: 11px;
-    }
-
-    .hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin: 25px 0 0;
-      color: #9dc4e1;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .hint span { color: #74ddff; font-size: 16px; text-shadow: 0 0 12px rgba(60,189,255,.64); }
-
     footer {
       display: flex;
       align-items: center;
@@ -432,10 +335,8 @@
     @media (max-width: 640px) {
       .page { width: min(100% - 36px, 480px); }
       header { padding: 18px 0; }
-      main { padding: 56px 0 48px; }
-      .intro { max-width: 380px; font-size: 14px; }
-      .world { margin-top: 37px; padding: 21px 15px 25px; border-radius: 27px; }
-      .project-grid { gap: 14px; }
+      main { min-height: calc(100vh - 132px); padding: 12px 0; }
+      .project-grid { min-height: 65vh; gap: 14px; }
       .project-card { width: min(46%, 195px); flex-basis: min(46%, 195px); }
       .bubble-shell, .project-card:nth-child(2) .bubble-shell { width: 170px; height: 181px; }
       .bubble, .project-card:nth-child(2) .bubble { width: 148px; height: 148px; }
@@ -443,7 +344,6 @@
       .bubble-art svg { width: 72px; height: 72px; }
       .project-card:nth-child(2) .bubble-art { width: 98px; height: 98px; }
       .project-name { font-size: 14px; text-align: center; }
-      .project-type { font-size: 10px; text-align: center; }
     }
 
     @media (max-width: 390px) {
@@ -477,15 +377,7 @@
     </header>
 
     <main>
-      <p class="eyebrow">Bienvenue dans mon univers</p>
-      <h1>Un petit monde<br>de <span>grandes idées.</span></h1>
-      <p class="intro">Mes projets flottent ici comme des petites planètes. Choisis une bulle et pars explorer !</p>
-
-      <section class="world" aria-labelledby="projects-title">
-        <div class="world-heading">
-          <h2 id="projects-title">Choisis ta prochaine aventure</h2>
-          <span class="project-count">2 bulles à explorer</span>
-        </div>
+      <section class="world" aria-label="Projets de Mateo">
         <div class="project-grid">
           <a class="project-card" href="/Scribbled/" aria-label="Ouvrir Scribbled, mon projet créatif">
             <span class="bubble-shell" aria-hidden="true">
@@ -503,7 +395,6 @@
               </span>
             </span>
             <span class="project-name">Scribbled</span>
-            <span class="project-type">Créativité &amp; gribouillis</span>
           </a>
 
           <a class="project-card" href="/mon-portfolio/" aria-label="Ouvrir mon portfolio">
@@ -527,10 +418,8 @@
               </span>
             </span>
             <span class="project-name">Mon Portfolio</span>
-            <span class="project-type">Mon univers en quelques pages</span>
           </a>
         </div>
-        <p class="hint"><span aria-hidden="true">✦</span> Survole une bulle pour la faire scintiller</p>
       </section>
     </main>
 
