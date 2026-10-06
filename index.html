@@ -3,365 +3,322 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#061329">
-  <meta name="description" content="Entrez dans le petit monde des projets de Mateo : des créations à découvrir, une bulle après l'autre.">
-  <title>Le petit monde de Mateo</title>
+  <meta name="theme-color" content="#1a5fb8">
+  <meta name="description" content="Les projets de Mateo : des créations à découvrir.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Mateo</title>
   <style>
     :root {
-      color-scheme: dark;
-      font-family: "Trebuchet MS", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+      font-family: "Fredoka", "Varela Round", "Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, system-ui, sans-serif;
       font-synthesis: none;
       text-rendering: optimizeLegibility;
-      --ink: #e4f5ff;
-      --muted: #9fc6e6;
-      --aqua: #83eaff;
-      --glass-border: rgba(155, 220, 255, .35);
+      -webkit-font-smoothing: antialiased;
+      --white: #ffffff;
+      --label-shadow: 0 1px 10px rgba(0, 70, 150, .55), 0 0 2px rgba(0, 50, 120, .35);
     }
 
     * { box-sizing: border-box; }
 
-    html { min-width: 320px; }
+    html, body { height: 100%; }
 
     body {
       position: relative;
       min-width: 320px;
-      min-height: 100vh;
       margin: 0;
-      overflow-x: hidden;
-      color: var(--ink);
-      background:
-        radial-gradient(ellipse at 50% 112%, rgba(0, 125, 210, .17), transparent 48%),
-        radial-gradient(ellipse at 10% 10%, rgba(17, 62, 119, .12), transparent 34%),
-        radial-gradient(ellipse at 90% 42%, rgba(39, 30, 108, .1), transparent 34%),
-        linear-gradient(155deg, #030916 0%, #07152c 44%, #0a2040 74%, #061329 100%);
+      overflow: hidden;
+      color: var(--white);
+      /* Dégradé de base type PSP : bleu profond en haut, cyan clair en bas */
+      background: linear-gradient(180deg, #0c3c9c 0%, #1f68be 28%, #2b9bd8 58%, #12b1e2 100%);
     }
 
     a { color: inherit; }
 
+    /* ---------- Fond animé ---------- */
+    #waves {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Voile de lumière très doux par-dessus */
+    .glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 45% at 50% 108%, rgba(160, 235, 255, .35), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 50% -10%, rgba(0, 20, 90, .35), transparent 70%);
+    }
+
+    /* ---------- Mise en page ---------- */
     .page {
-      width: min(1080px, calc(100% - 48px));
-      min-height: 100vh;
-      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      pointer-events: none; /* laisse passer les clics vers les bulles de fond */
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
     }
 
     header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 0;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: #def3ff;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: -.035em;
-      text-decoration: none;
-    }
-
-    .brand-mark {
-      position: relative;
-      display: grid;
-      width: 35px;
-      height: 35px;
-      place-items: center;
-      overflow: hidden;
-      border: 0;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #d9fcff 0%, #57d5ff 33%, #1475d1 68%, #263a9d 100%);
-      box-shadow: inset -4px -5px 8px rgba(4, 27, 83, .48), 0 0 15px rgba(45, 166, 255, .28);
-      color: white;
-      font-size: 16px;
-      text-shadow: 0 1px 3px rgba(27, 103, 156, .38);
-    }
-
-    .brand-mark::before {
-      position: absolute;
-      top: 3px;
-      left: 6px;
-      width: 18px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.72);
-      content: "";
-      filter: blur(2px);
-      transform: rotate(-25deg);
+      justify-content: flex-end;
+      padding: 22px clamp(18px, 4vw, 40px);
     }
 
     .github-link {
+      pointer-events: auto;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 9px 14px;
-      padding: 7px 0 7px 7px;
-      color: #a9c5df;
-      font-size: 12px;
-      font-weight: 700;
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 255, 255, .38);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .14);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color: rgba(255, 255, 255, .92);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: .02em;
       text-decoration: none;
-      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+      text-shadow: var(--label-shadow);
+      transition: background .3s ease, box-shadow .3s ease, transform .3s ease;
     }
 
+    .github-link svg { width: 15px; height: 15px; }
+
     .github-link:hover, .github-link:focus-visible {
-      color: #d5f4ff;
-      text-shadow: 0 0 14px rgba(77,196,255,.42);
+      background: rgba(255, 255, 255, .26);
+      box-shadow: 0 0 22px rgba(255, 255, 255, .35);
       outline: none;
     }
 
-    .github-link svg { width: 16px; height: 16px; }
-
     main {
       display: grid;
-      min-height: calc(100vh - 142px);
-      align-items: center;
-      padding: 20px 0;
+      flex: 1;
+      place-items: center;
+      padding: 0 clamp(14px, 4vw, 40px) 9vh;
     }
 
-    .world {
-      width: 100%;
-    }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      min-height: 60vh;
-      align-items: center;
-      justify-items: center;
-      gap: clamp(20px, 5vw, 64px);
-      padding: 25px 0;
-    }
-
-    .project-card {
+    /* ---------- Menu façon XMB ---------- */
+    .menu {
       display: flex;
       width: 100%;
+      max-width: 900px;
+      align-items: flex-start;
+      justify-content: center;
+      gap: clamp(18px, 6vw, 80px);
+    }
+
+    .item {
+      pointer-events: auto;
+      display: flex;
+      width: clamp(92px, 28vw, 260px);
       flex-direction: column;
       align-items: center;
       text-decoration: none;
+      transition: opacity .4s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .bubble-shell {
-      display: grid;
-      width: 216px;
-      height: 216px;
-      place-items: center;
-      animation: drift 6s ease-in-out infinite;
+    .tile-wrap {
+      animation: float 7s ease-in-out infinite;
     }
+    .item:nth-child(2) .tile-wrap { animation-delay: -2.3s; }
+    .item:nth-child(3) .tile-wrap { animation-delay: -4.6s; }
 
-    .project-card:nth-child(2) .bubble-shell {
-      width: 230px;
-      height: 230px;
-      animation-delay: -2.8s;
-    }
-
-    .bubble {
+    /* Bulle de savon Frutiger Aero : centre transparent, liseré irisé bleu/vert */
+    .tile {
       position: relative;
       display: grid;
-      width: 186px;
-      height: 186px;
+      width: clamp(88px, 24vw, 150px);
+      aspect-ratio: 1;
       place-items: center;
-      overflow: hidden;
-      border: 0;
       border-radius: 50%;
       background:
-        radial-gradient(ellipse at 27% 15%, rgba(227,252,255,.56) 0%, rgba(135,221,255,.2) 10%, transparent 35%),
-        radial-gradient(ellipse at 76% 84%, rgba(15,67,167,.47), transparent 43%),
-        linear-gradient(145deg, #356e9c 0%, #123d74 28%, #071d48 57%, #050e2a 100%);
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .02) 55%, rgba(190, 240, 255, .16) 78%, rgba(255, 255, 255, .28) 100%);
       box-shadow:
-        inset 2px 3px 9px rgba(224,250,255,.35),
-        inset -15px -19px 30px rgba(0,3,24,.72),
-        inset 8px 7px 20px rgba(186,235,255,.11),
-        0 16px 32px rgba(0,6,26,.4),
-        0 0 28px rgba(53,153,255,.1);
-      transition: transform .32s cubic-bezier(.2,.8,.2,1), box-shadow .32s ease, filter .32s ease;
+        inset 0 0 18px rgba(255, 255, 255, .22),
+        inset 6px 8px 18px rgba(255, 255, 255, .16),
+        inset -8px -10px 20px rgba(120, 255, 210, .18),
+        0 10px 26px rgba(0, 70, 150, .2);
+      transition: transform .5s cubic-bezier(.2, .8, .2, 1), box-shadow .5s ease, background .5s ease;
     }
 
-    .bubble::before {
+    /* liseré irisé (anneau fin dégradé bleu -> vert -> blanc) */
+    .tile::before {
       position: absolute;
-      z-index: 2;
-      top: 13px;
-      left: 27px;
-      width: 78px;
-      height: 27px;
+      inset: 0;
       border-radius: 50%;
-      background: linear-gradient(180deg, rgba(229,252,255,.82), rgba(124,217,255,.08));
+      background: conic-gradient(from 200deg,
+        rgba(255, 255, 255, .95), rgba(150, 215, 255, .85) 14%, rgba(50, 120, 235, .95) 30%,
+        rgba(90, 235, 190, .95) 48%, rgba(210, 255, 235, .7) 60%, rgba(120, 190, 255, .8) 78%,
+        rgba(255, 255, 255, .95));
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 3.5px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 3.5px));
       content: "";
-      filter: blur(2px);
-      transform: rotate(-31deg);
+      opacity: .9;
       pointer-events: none;
     }
 
-    .bubble::after {
+    /* reflets : croissant en haut à gauche + lueur verte en bas à droite */
+    .tile::after {
       position: absolute;
-      z-index: 2;
-      right: 15px;
-      bottom: 32px;
-      width: 19px;
-      height: 48px;
+      inset: 0;
       border-radius: 50%;
-      background: linear-gradient(90deg, transparent, rgba(172,239,255,.6), transparent);
+      background:
+        radial-gradient(ellipse 38% 19% at 30% 15%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 100%),
+        radial-gradient(circle 4% at 21% 30%, rgba(255, 255, 255, .9), transparent 100%),
+        radial-gradient(ellipse 30% 12% at 72% 88%, rgba(150, 255, 215, .6), transparent 100%),
+        radial-gradient(circle at 50% 50%, transparent 66%, rgba(255, 255, 255, .22) 100%);
       content: "";
-      filter: blur(3px);
-      transform: rotate(-24deg);
-      transition: transform .32s ease, opacity .32s ease;
       pointer-events: none;
     }
 
-    .bubble-art {
+    .tile svg {
       position: relative;
-      z-index: 1;
-      display: grid;
-      width: 116px;
-      height: 116px;
-      place-items: center;
-      border: 0;
-      border-radius: 33px;
-      background: transparent;
-      box-shadow: none;
-      transform: rotate(-5deg);
-      transition: transform .32s cubic-bezier(.2,.8,.2,1);
-      backdrop-filter: blur(3px);
+      width: 52%;
+      height: 52%;
+      overflow: visible;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, .75)) drop-shadow(0 2px 6px rgba(0, 70, 150, .35));
+      transition: transform .45s cubic-bezier(.2, .8, .2, 1);
     }
 
-    .bubble-art svg { width: 88px; height: 88px; overflow: visible; }
+    .label {
+      max-width: 100%;
+      margin-top: 20px;
+      color: #fff;
+      font-size: clamp(17px, 4.4vw, 26px);
+      font-weight: 600;
+      letter-spacing: .01em;
+      line-height: 1.2;
+      text-align: center;
+      /* contour bleu + reflet blanc + halo cyan, comme le logo Frutiger Aero */
+      -webkit-text-stroke: .2em #1a62c8;
+      paint-order: stroke fill;
+      text-shadow:
+        0 2px 0 rgba(10, 60, 150, .55),
+        0 0 14px rgba(120, 230, 255, .85),
+        0 4px 12px rgba(0, 50, 140, .45);
+      transition: transform .45s cubic-bezier(.2, .8, .2, 1), text-shadow .45s ease;
+    }
 
-    .project-card:nth-child(2) .bubble {
-      width: 198px;
-      height: 198px;
+    /* Effet "sélection" : l'élément actif grossit et brille, les autres s'estompent */
+    .menu:hover .item, .menu:focus-within .item { opacity: .8; }
+    .menu:hover .item:hover, .menu:focus-within .item:focus-visible { opacity: 1; }
+
+    .item:hover .tile, .item:focus-visible .tile {
+      transform: translateY(-6px) scale(1.1);
       background:
-        radial-gradient(ellipse at 27% 15%, rgba(245,227,255,.55) 0%, rgba(178,139,255,.2) 10%, transparent 35%),
-        radial-gradient(ellipse at 76% 84%, rgba(105,42,164,.5), transparent 43%),
-        linear-gradient(145deg, #654b9c 0%, #3d347b 30%, #1e2258 58%, #101639 100%);
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .08) 50%, rgba(190, 240, 255, .28) 78%, rgba(255, 255, 255, .4) 100%);
       box-shadow:
-        inset 2px 3px 9px rgba(240,227,255,.34),
-        inset -15px -19px 30px rgba(4,3,28,.72),
-        inset 8px 7px 20px rgba(216,185,255,.11),
-        0 16px 32px rgba(4,3,27,.44),
-        0 0 28px rgba(177,93,255,.12);
+        inset 0 0 22px rgba(255, 255, 255, .35),
+        inset 6px 8px 18px rgba(255, 255, 255, .22),
+        inset -8px -10px 22px rgba(120, 255, 210, .28),
+        0 16px 38px rgba(0, 70, 160, .26),
+        0 0 44px rgba(200, 245, 255, .6);
     }
 
-    .project-card:nth-child(2) .bubble-art {
-      width: 124px;
-      height: 124px;
-      transform: rotate(5deg);
+    .item:hover .tile svg, .item:focus-visible .tile svg { transform: scale(1.06); }
+
+    .item:hover .label, .item:focus-visible .label {
+      transform: translateY(2px);
+      text-shadow:
+        0 2px 0 rgba(10, 60, 150, .55),
+        0 0 22px rgba(170, 245, 255, 1),
+        0 4px 12px rgba(0, 50, 140, .45);
     }
 
-    .project-card:nth-child(3) .bubble {
-      background:
-        radial-gradient(ellipse at 27% 15%, rgba(224,255,240,.56) 0%, rgba(135,255,203,.2) 10%, transparent 35%),
-        radial-gradient(ellipse at 76% 84%, rgba(12,109,112,.5), transparent 43%),
-        linear-gradient(145deg, #438c87 0%, #155c62 29%, #083847 58%, #051b30 100%);
-      box-shadow:
-        inset 2px 3px 9px rgba(224,255,245,.33),
-        inset -15px -19px 30px rgba(0,15,23,.72),
-        inset 8px 7px 20px rgba(186,255,229,.1),
-        0 16px 32px rgba(0,18,24,.44),
-        0 0 28px rgba(65,236,198,.11);
+    .item:active .tile { transform: scale(1.0); }
+
+    .item:focus-visible { outline: none; }
+
+    /* petites bulles décoratives qui montent doucement */
+    .bg-bubble {
+      position: fixed;
+      z-index: 0;
+      bottom: -80px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 58%, rgba(200,240,255,.22) 100%);
+      box-shadow: inset 0 0 0 1.5px rgba(190, 235, 255, .7), inset -3px -4px 6px rgba(130, 255, 215, .35);
+      pointer-events: auto;
+      cursor: pointer;
+      animation: rise linear infinite;
+    }
+    .bg-bubble::before { position: absolute; inset: -8px; border-radius: 50%; content: ""; }
+    .bg-bubble::after {
+      position: absolute;
+      top: 14%; left: 20%;
+      width: 34%; height: 18%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .85);
+      filter: blur(.5px);
+      transform: rotate(-30deg);
+      content: "";
     }
 
-    .project-card:nth-child(3) .bubble-art {
-      transform: rotate(-2deg);
+    /* éclatement d'une bulle du menu */
+    .item.popping { pointer-events: none; }
+    .item.popping .tile { animation: popTile .38s cubic-bezier(.2, .7, .3, 1) forwards; }
+    .item.popping .label { opacity: .55; transition: opacity .3s ease; }
+    @keyframes popTile {
+      0%   { transform: translateY(-6px) scale(1.1); opacity: 1; }
+      35%  { transform: translateY(-6px) scale(1.3); opacity: 1; }
+      100% { transform: translateY(-6px) scale(1.45); opacity: 0; }
     }
 
-    .project-card:hover .bubble, .project-card:focus-visible .bubble {
-      transform: scale(1.075);
-      filter: saturate(1.13) brightness(1.035);
-      box-shadow:
-        inset 2px 4px 10px rgba(255,255,255,.66),
-        inset -16px -20px 30px rgba(47,117,197,.34),
-        0 21px 40px rgba(0,7,28,.56),
-        0 0 34px rgba(59,184,255,.34);
+    /* effet d'éclatement : anneau + gouttelettes */
+    .pop-fx { position: fixed; z-index: 5; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
+    .pop-ring {
+      position: absolute;
+      border: 2px solid rgba(255, 255, 255, .95);
+      border-radius: 50%;
+      box-shadow: 0 0 14px rgba(190, 240, 255, .9), inset 0 0 10px rgba(150, 255, 215, .5);
+    }
+    .pop-drop {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff 0 25%, rgba(200, 240, 255, .55) 60%, rgba(120, 255, 215, .35) 100%);
+      box-shadow: 0 0 6px rgba(200, 245, 255, .8);
     }
 
-    .project-card:hover .bubble::after, .project-card:focus-visible .bubble::after {
-      opacity: .8;
-      transform: translate(-12px,-8px) rotate(-24deg) scale(1.2);
+    @keyframes rise {
+      from { transform: translate(0, 0); opacity: 0; }
+      10% { opacity: .9; }
+      to { transform: translate(var(--dx, 20px), -115vh); opacity: .2; }
     }
 
-    .project-card:hover .bubble-art, .project-card:focus-visible .bubble-art {
-      transform: rotate(0) scale(1.06);
-    }
-
-    .project-card:active .bubble { transform: scale(.94); }
-
-    .project-card:focus-visible { outline: 2px solid rgba(142,234,255,.64); outline-offset: 8px; border-radius: 50%; }
-
-    .project-name {
-      margin-top: 7px;
-      color: #e0f4ff;
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: -.035em;
-      text-shadow: 0 0 13px rgba(61,181,255,.28);
-      transition: color .2s ease, transform .2s ease;
-    }
-
-    .project-card:hover .project-name, .project-card:focus-visible .project-name {
-      transform: translateY(-2px);
-      color: #8deaff;
-    }
-
-    footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 20px 0 25px;
-      color: #8eafce;
-      font-size: 11px;
-    }
-
-    footer a {
-      color: #b9eaff;
-      font-weight: 700;
-      text-decoration: none;
-      transition: color .2s ease;
-    }
-
-    footer a:hover, footer a:focus-visible { color: #79e7ff; }
-
-    @keyframes drift {
+    @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-11px); }
+      50% { transform: translateY(-8px); }
     }
 
-    @media (max-width: 640px) {
-      .page { width: min(100% - 36px, 480px); }
-      header { padding: 18px 0; }
-      main { min-height: calc(100vh - 132px); padding: 12px 0; }
-      .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); min-height: 65vh; gap: 14px 0; }
-      .project-card:nth-child(3) { grid-column: 1 / -1; width: min(100%, 195px); }
-      .bubble-shell, .project-card:nth-child(2) .bubble-shell, .project-card:nth-child(3) .bubble-shell { width: 170px; height: 181px; }
-      .bubble, .project-card:nth-child(2) .bubble, .project-card:nth-child(3) .bubble { width: 148px; height: 148px; }
-      .bubble-art { width: 94px; height: 94px; border-radius: 27px; }
-      .bubble-art svg { width: 72px; height: 72px; }
-      .project-card:nth-child(2) .bubble-art, .project-card:nth-child(3) .bubble-art { width: 98px; height: 98px; }
-      .project-name { font-size: 14px; text-align: center; }
-    }
-
-    @media (max-width: 390px) {
-      .project-grid { gap: 0; }
-      .bubble-shell, .project-card:nth-child(2) .bubble-shell, .project-card:nth-child(3) .bubble-shell { width: 145px; height: 166px; }
-      .bubble, .project-card:nth-child(2) .bubble, .project-card:nth-child(3) .bubble { width: 132px; height: 132px; }
-      .bubble-art { width: 84px; height: 84px; }
-      .bubble-art svg { width: 64px; height: 64px; }
-      .project-card:nth-child(2) .bubble-art, .project-card:nth-child(3) .bubble-art { width: 88px; height: 88px; }
-      .github-link { padding: 7px 0 7px 7px; }
+    @media (max-width: 420px) {
+      .menu { gap: 10px; }
+      .item { width: 30%; }
+      .label { margin-top: 14px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
     }
   </style>
 </head>
 <body>
+  <canvas id="waves" aria-hidden="true"></canvas>
+  <div class="glow" aria-hidden="true"></div>
+
   <div class="page">
     <header>
-      <a class="brand" href="/" aria-label="Accueil — Mateo">
-        <span class="brand-mark" aria-hidden="true">M</span>
-        <span>Le petit monde de Mateo</span>
-      </a>
       <a class="github-link" href="https://github.com/mateo-llr" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.68-3.76-1.32-3.76-1.32-.5-1.3-1.24-1.65-1.24-1.65-1.01-.69.08-.68.08-.68 1.12.08 1.7 1.15 1.7 1.15 1 1.69 2.6 1.2 3.23.92.1-.72.39-1.2.7-1.48-2.48-.28-5.08-1.24-5.08-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.95 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.14 3.05-1.14.61 1.53.23 2.67.11 2.95.72.78 1.15 1.77 1.15 2.99 0 4.29-2.6 5.23-5.09 5.51.4.35.76 1.03.76 2.08v3.09c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/>
@@ -371,76 +328,240 @@
     </header>
 
     <main>
-      <section class="world" aria-label="Projets de Mateo">
-        <div class="project-grid">
-          <a class="project-card" href="/Scribbled/" aria-label="Ouvrir Scribbled, mon projet créatif">
-            <span class="bubble-shell" aria-hidden="true">
-              <span class="bubble">
-                <span class="bubble-art">
-                  <svg viewBox="0 0 100 100" fill="none">
-                    <path d="M25 16h39l13 14v54H25V16Z" fill="#fff" fill-opacity=".9" stroke="#62BEE2" stroke-width="3" stroke-linejoin="round"/>
-                    <path d="M64 16v15h13" stroke="#62BEE2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M35 44c8-11 13 12 23 0s13 6 18 0M35 58c6 8 12-7 19 0s12-3 17-1M36 70c6-3 11 3 17 0" stroke="#EE8DB5" stroke-width="4" stroke-linecap="round"/>
-                    <path d="m65 73 17-30 7 4-17 30-9 5 2-9Z" fill="#FFD778" stroke="#418EBD" stroke-width="2.5" stroke-linejoin="round"/>
-                    <path d="m82 43 3-5 7 4-3 5" fill="#FF9F8D" stroke="#418EBD" stroke-width="2.5" stroke-linejoin="round"/>
-                    <circle cx="37" cy="31" r="3" fill="#75D7B0"/>
-                  </svg>
-                </span>
-              </span>
+      <nav class="menu" aria-label="Projets de Mateo">
+        <a class="item" href="/Scribbled/" aria-label="Ouvrir Scribbled, mon projet créatif">
+          <span class="tile-wrap">
+            <span class="tile">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <path d="M12 33 14 26 31 9a3 3 0 0 1 4.2 0l2.8 2.8a3 3 0 0 1 0 4.2L21 33l-9 2Z" fill="#fff"/>
+                <path d="m28 12 8 8" stroke="rgba(40,130,210,.55)" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M8 41c4-5 7 3 11-1s7 3 11-1 6 2 10-1" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+              </svg>
             </span>
-            <span class="project-name">Scribbled</span>
-          </a>
+          </span>
+          <span class="label">Scribbled</span>
+        </a>
 
-          <a class="project-card" href="/mon-portfolio/" aria-label="Ouvrir mon portfolio">
-            <span class="bubble-shell" aria-hidden="true">
-              <span class="bubble">
-                <span class="bubble-art">
-                  <svg viewBox="0 0 100 100" fill="none">
-                    <rect x="14" y="19" width="72" height="57" rx="9" fill="#fff" fill-opacity=".94" stroke="#A78BE3" stroke-width="3"/>
-                    <path d="M15 29h70" stroke="#C6B5EE" stroke-width="3"/>
-                    <circle cx="23" cy="24" r="1.7" fill="#F18DB4"/>
-                    <circle cx="29" cy="24" r="1.7" fill="#F6CB70"/>
-                    <circle cx="35" cy="24" r="1.7" fill="#76D5AE"/>
-                    <circle cx="36" cy="47" r="9" fill="#FFC8A4"/>
-                    <path d="M23 68c1-9 6-14 13-14s12 5 13 14" fill="#79D6CE"/>
-                    <path d="M57 43h19M57 51h15M57 59h18" stroke="#72BADA" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M40 77v6m-11 1h32" stroke="#7C9BCB" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M68 74c6 0 11 5 11 11H58c0-6 4-11 10-11Z" fill="#F39DC7" stroke="#A78BE3" stroke-width="2.5" stroke-linejoin="round"/>
-                    <path d="M68 68v8m-5-4 5 4 5-4" stroke="#A78BE3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </span>
+        <a class="item" href="/mon-portfolio/" aria-label="Ouvrir mon portfolio">
+          <span class="tile-wrap">
+            <span class="tile">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <rect x="6" y="9" width="36" height="30" rx="6" stroke="#fff" stroke-width="3"/>
+                <path d="M6 18h36" stroke="#fff" stroke-width="3"/>
+                <circle cx="12" cy="13.5" r="1.6" fill="#fff"/>
+                <circle cx="17.5" cy="13.5" r="1.6" fill="#fff"/>
+                <circle cx="17" cy="27" r="4" fill="#fff"/>
+                <path d="M10.5 36c.8-4 3.2-6 6.5-6s5.7 2 6.5 6" fill="#fff"/>
+                <path d="M28 25h8M28 31h6" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+              </svg>
             </span>
-            <span class="project-name">Mon Portfolio</span>
-          </a>
+          </span>
+          <span class="label">Mon Portfolio</span>
+        </a>
 
-          <a class="project-card" href="/comment-est-votre-blanquette/" aria-label="Ouvrir Comment est votre blanquette, mon site de cuisine">
-            <span class="bubble-shell" aria-hidden="true">
-              <span class="bubble">
-                <span class="bubble-art">
-                  <svg viewBox="0 0 100 100" fill="none">
-                    <path d="M24 44h52l-5 34H29l-5-34Z" fill="#E8FAF3" stroke="#83E2C5" stroke-width="3" stroke-linejoin="round"/>
-                    <path d="M20 43h60v9H20a4.5 4.5 0 0 1 0-9Z" fill="#67CDB7" stroke="#83E2C5" stroke-width="3"/>
-                    <path d="M34 39c-5-7 5-8 0-15m16 15c-5-7 5-8 0-15m16 15c-5-7 5-8 0-15" stroke="#D9FBF1" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M29 59h-9m60 0h-9" stroke="#A9F1D8" stroke-width="5" stroke-linecap="round"/>
-                    <path d="M40 60c4-5 8 5 12 0s8 5 12 0" stroke="#F2C979" stroke-width="3.5" stroke-linecap="round"/>
-                    <circle cx="42" cy="69" r="3" fill="#F2C979"/>
-                    <circle cx="58" cy="69" r="3" fill="#F2C979"/>
-                    <path d="M35 84h30" stroke="#D5F4EA" stroke-width="4" stroke-linecap="round"/>
-                  </svg>
-                </span>
-              </span>
+        <a class="item" href="/comment-est-votre-blanquette/" aria-label="Ouvrir Comment est votre blanquette, mon site de cuisine">
+          <span class="tile-wrap">
+            <span class="tile">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <path d="M11 22h26l-2.4 15.2A4 4 0 0 1 30.7 40H17.3a4 4 0 0 1-3.9-2.8L11 22Z" fill="#fff"/>
+                <path d="M7 22h34" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/>
+                <path d="M7 27h-3M41 27h3" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+                <path d="M18 17c-3-3 3-4 0-8M24 17c-3-3 3-4 0-8M30 17c-3-3 3-4 0-8" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+              </svg>
             </span>
-            <span class="project-name">Comment est votre blanquette ?</span>
-          </a>
-        </div>
-      </section>
+          </span>
+          <span class="label">Comment est votre blanquette ?</span>
+        </a>
+      </nav>
     </main>
-
-    <footer>
-      <span>Fait avec un peu de magie par Mateo.</span>
-      <a href="https://github.com/mateo-llr" target="_blank" rel="noopener noreferrer">github.com/mateo-llr ↗</a>
-    </footer>
   </div>
+
+  <script>
+    (function () {
+      var canvas = document.getElementById('waves');
+      var ctx = canvas.getContext('2d');
+      var w = 0, h = 0, dpr = 1;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Rubans translucides : position, amplitude, épaisseur, vitesse, sens du dégradé
+      var ribbons = [
+        { y: .20, amp: .060, thick: .22, k: 1.1, sp: .050, ph: 0.0, edge: .55, flip: false },
+        { y: .46, amp: .075, thick: .16, k: 1.4, sp: .062, ph: 1.7, edge: .50, flip: true  },
+        { y: .64, amp: .060, thick: .20, k: 0.9, sp: .045, ph: 3.1, edge: .42, flip: false },
+        { y: .88, amp: .045, thick: .16, k: 1.3, sp: .058, ph: 4.6, edge: .40, flip: true  }
+      ];
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function center(r, x, t) {
+        var u = x / w * Math.PI * 2 * r.k;
+        return h * (r.y
+          + r.amp * Math.sin(u + r.ph + t * r.sp * 6)
+          + r.amp * .45 * Math.sin(u * 1.9 - r.ph * .7 + t * r.sp * 4.2));
+      }
+
+      function thick(r, x, t) {
+        var u = x / w * Math.PI * 2;
+        return h * r.thick * (0.62 + 0.38 * Math.sin(u * .8 + r.ph * 1.3 + t * r.sp * 3));
+      }
+
+      function draw(t) {
+        ctx.clearRect(0, 0, w, h);
+        var step = Math.max(6, Math.round(w / 180));
+
+        for (var i = 0; i < ribbons.length; i++) {
+          var r = ribbons[i], top = [], bot = [], minY = h, maxY = 0, x, y1, y2;
+
+          for (x = 0; x <= w + step; x += step) {
+            y1 = center(r, x, t);
+            y2 = y1 + thick(r, x, t);
+            top.push(y1); bot.push(y2);
+            if (y1 < minY) minY = y1;
+            if (y2 > maxY) maxY = y2;
+          }
+
+          ctx.beginPath();
+          var n = top.length;
+          ctx.moveTo(0, top[0]);
+          for (var a = 1; a < n; a++) ctx.lineTo(a * step, top[a]);
+          for (var b = n - 1; b >= 0; b--) ctx.lineTo(b * step, bot[b]);
+          ctx.closePath();
+
+          var g = ctx.createLinearGradient(0, minY, 0, maxY);
+          var s = r.edge;
+          if (!r.flip) {
+            g.addColorStop(0, 'rgba(255,255,255,' + s * .75 + ')');
+            g.addColorStop(.18, 'rgba(235,248,255,' + s * .32 + ')');
+            g.addColorStop(1, 'rgba(255,255,255,0)');
+          } else {
+            g.addColorStop(0, 'rgba(255,255,255,0)');
+            g.addColorStop(.78, 'rgba(235,248,255,' + s * .26 + ')');
+            g.addColorStop(1, 'rgba(255,255,255,' + s * .7 + ')');
+          }
+          ctx.fillStyle = g;
+          ctx.fill();
+
+          // liseré lumineux le long du bord brillant (halo en 3 passes)
+          var edgeArr = r.flip ? bot : top;
+          var widths = [9, 4, 1.4], alphas = [.05, .1, .38];
+          for (var p = 0; p < 3; p++) {
+            ctx.beginPath();
+            ctx.moveTo(0, edgeArr[0]);
+            for (var q = 1; q < n; q++) ctx.lineTo(q * step, edgeArr[q]);
+            ctx.lineWidth = widths[p];
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = 'rgba(255,255,255,' + alphas[p] * (s / .5) + ')';
+            ctx.stroke();
+          }
+        }
+      }
+
+      function loop(ms) {
+        draw(ms / 1000);
+        requestAnimationFrame(loop);
+      }
+
+      resize();
+      window.addEventListener('resize', function () { resize(); if (reduce) draw(8); });
+
+      if (reduce) draw(8);
+      else requestAnimationFrame(loop);
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* Effet d'éclatement : anneau qui s'étend + gouttelettes qui jaillissent */
+      function burst(x, y, r) {
+        if (reduce) return;
+        var fx = document.createElement('div');
+        fx.className = 'pop-fx';
+        fx.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+
+        var ring = document.createElement('div');
+        ring.className = 'pop-ring';
+        ring.style.cssText = 'left:' + (-r) + 'px;top:' + (-r) + 'px;width:' + (r * 2) + 'px;height:' + (r * 2) + 'px';
+        fx.appendChild(ring);
+        ring.animate(
+          [{ transform: 'scale(.92)', opacity: .95 }, { transform: 'scale(1.35)', opacity: 0 }],
+          { duration: 420, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' }
+        );
+
+        var n = r > 40 ? 16 : 8;
+        for (var i = 0; i < n; i++) {
+          var d = document.createElement('div');
+          var sz = (r > 40 ? 5 : 3) + Math.random() * (r > 40 ? 9 : 5);
+          var ang = (i / n) * Math.PI * 2 + Math.random() * .5;
+          var dist = r * (.95 + Math.random() * .9);
+          var tx = Math.cos(ang) * dist, ty = Math.sin(ang) * dist;
+          d.className = 'pop-drop';
+          d.style.cssText = 'left:' + (Math.cos(ang) * r * .9 - sz / 2) + 'px;top:' + (Math.sin(ang) * r * .9 - sz / 2) + 'px;width:' + sz + 'px;height:' + sz + 'px';
+          fx.appendChild(d);
+          d.animate(
+            [{ transform: 'translate(0,0) scale(1)', opacity: 1 },
+             { transform: 'translate(' + (tx - Math.cos(ang) * r * .9) + 'px,' + (ty - Math.sin(ang) * r * .9 + 14) + 'px) scale(.3)', opacity: 0 }],
+            { duration: 480 + Math.random() * 300, easing: 'cubic-bezier(.15,.7,.3,1)', fill: 'forwards' }
+          );
+        }
+        document.body.appendChild(fx);
+        setTimeout(function () { fx.remove(); }, 900);
+      }
+
+      /* Clic sur une bulle du menu : elle éclate, puis on change de page */
+      var items = document.querySelectorAll('.item');
+      items.forEach(function (item) {
+        item.addEventListener('click', function (e) {
+          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          var url = item.href;
+          if (reduce) { window.location.href = url; return; }
+          var tile = item.querySelector('.tile').getBoundingClientRect();
+          item.classList.add('popping');
+          burst(tile.left + tile.width / 2, tile.top + tile.height / 2, tile.width / 2);
+          setTimeout(function () { window.location.href = url; }, 520);
+        });
+      });
+
+      /* Retour arrière : on remet la bulle en place */
+      window.addEventListener('pageshow', function () {
+        items.forEach(function (i) { i.classList.remove('popping'); });
+      });
+
+      if (reduce) return;
+
+      /* Bulles de fond : elles montent, on peut les éclater */
+      function spawn(initial) {
+        var b = document.createElement('span');
+        var size = 18 + Math.random() * 40;
+        b.className = 'bg-bubble';
+        b.setAttribute('aria-hidden', 'true');
+        b.style.cssText = 'left:' + (Math.random() * 100) + '%;width:' + size + 'px;height:' + size + 'px;' +
+          'animation-duration:' + (22 + Math.random() * 26) + 's;' +
+          'animation-delay:-' + (initial ? Math.random() * 40 : 0) + 's;' +
+          '--dx:' + ((Math.random() - .5) * 120) + 'px';
+        b.addEventListener('animationend', function () { b.remove(); spawn(false); });
+        b.addEventListener('pointerdown', function (e) {
+          e.preventDefault();
+          var r = b.getBoundingClientRect();
+          burst(r.left + r.width / 2, r.top + r.height / 2, r.width / 2);
+          b.remove();
+          setTimeout(function () { spawn(false); }, 1500 + Math.random() * 2500);
+        });
+        document.body.appendChild(b);
+      }
+
+      var n = window.innerWidth < 600 ? 7 : 12;
+      for (var i = 0; i < n; i++) spawn(true);
+    })();
+  </script>
 </body>
 </html>
