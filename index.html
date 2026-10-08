@@ -7,7 +7,7 @@
   <meta name="description" content="Les projets de Mateo : des créations à découvrir.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
   <title>Mateo</title>
   <style>
     :root {
@@ -287,6 +287,36 @@
       box-shadow: 0 0 6px rgba(200, 245, 255, .8);
     }
 
+    .bubble-score {
+      position: fixed;
+      z-index: 10;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 14px;
+      border: 2px solid #000;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, .28);
+      color: #fff;
+      font-family: "Press Start 2P", "Courier New", monospace;
+      font-size: clamp(10px, 2vw, 14px);
+      line-height: 1.5;
+      text-align: center;
+      -webkit-text-stroke: .5px #000;
+      text-shadow: 2px 2px 0 #000;
+      pointer-events: none;
+    }
+
+    .bubble-score.is-appearing {
+      animation: score-appear .55s cubic-bezier(.2, .8, .25, 1) both;
+    }
+
+    @keyframes score-appear {
+      0% { opacity: 0; transform: translate(-50%, -10px) scale(.92); }
+      68% { opacity: 1; transform: translate(-50%, 2px) scale(1.035); }
+      100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    }
+
     @keyframes rise {
       from { transform: translate(0, 0); opacity: 0; }
       10% { opacity: .9; }
@@ -316,6 +346,7 @@
 <body>
   <canvas id="waves" aria-hidden="true"></canvas>
   <div class="glow" aria-hidden="true"></div>
+  <div class="bubble-score" id="bubble-score" role="status" aria-live="polite" hidden></div>
 
   <div class="page">
     <header>
@@ -479,6 +510,41 @@
   <script>
     (function () {
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var popSound = new Audio('bubble.mp3');
+      var scoreElement = document.getElementById('bubble-score');
+      var poppedBubbles = 0;
+      var konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a', 'Enter'];
+      var konamiPosition = 0;
+
+      function playPopSound() {
+        var sound = popSound.cloneNode();
+        sound.playbackRate = .92 + Math.random() * .16;
+        sound.play().catch(function (error) {
+          console.error('Impossible de lire le son de bulle.', error);
+        });
+      }
+
+      function countPoppedBubble() {
+        poppedBubbles++;
+        if (!scoreElement.hidden) scoreElement.textContent = 'BULLES ÉCLATÉES : ' + poppedBubbles;
+      }
+
+      window.addEventListener('keydown', function (event) {
+        if (event.repeat) return;
+        var key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+        if (key === konamiCode[konamiPosition]) {
+          konamiPosition++;
+          if (konamiPosition === konamiCode.length) {
+            event.preventDefault();
+            scoreElement.textContent = 'BULLES ÉCLATÉES : ' + poppedBubbles;
+            scoreElement.hidden = false;
+            requestAnimationFrame(function () { scoreElement.classList.add('is-appearing'); });
+            konamiPosition = 0;
+          }
+        } else {
+          konamiPosition = key === konamiCode[0] ? 1 : 0;
+        }
+      });
 
       /* Effet d'éclatement : anneau qui s'étend + gouttelettes qui jaillissent */
       function burst(x, y, r) {
@@ -523,6 +589,8 @@
           if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
           e.preventDefault();
           var url = item.href;
+          playPopSound();
+          countPoppedBubble();
           if (reduce) { window.location.href = url; return; }
           var tile = item.querySelector('.tile').getBoundingClientRect();
           item.classList.add('popping');
@@ -552,6 +620,8 @@
         b.addEventListener('pointerdown', function (e) {
           e.preventDefault();
           var r = b.getBoundingClientRect();
+          playPopSound();
+          countPoppedBubble();
           burst(r.left + r.width / 2, r.top + r.height / 2, r.width / 2);
           b.remove();
           setTimeout(function () { spawn(false); }, 1500 + Math.random() * 2500);
