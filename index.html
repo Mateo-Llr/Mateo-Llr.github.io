@@ -516,9 +516,11 @@
       var konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a', 'Enter'];
       var konamiPosition = 0;
 
-      function playPopSound() {
+      function playPopSound(diameter) {
         var sound = popSound.cloneNode();
-        sound.playbackRate = .92 + Math.random() * .16;
+        var size = Math.max(18, Math.min(150, diameter));
+        var sizePitch = 1.3 - (size - 18) / (150 - 18) * .5;
+        sound.playbackRate = sizePitch * (.985 + Math.random() * .03);
         sound.play().catch(function (error) {
           console.error('Impossible de lire le son de bulle.', error);
         });
@@ -589,10 +591,10 @@
           if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
           e.preventDefault();
           var url = item.href;
-          playPopSound();
+          var tile = item.querySelector('.tile').getBoundingClientRect();
+          playPopSound(tile.width);
           countPoppedBubble();
           if (reduce) { window.location.href = url; return; }
-          var tile = item.querySelector('.tile').getBoundingClientRect();
           item.classList.add('popping');
           burst(tile.left + tile.width / 2, tile.top + tile.height / 2, tile.width / 2);
           setTimeout(function () { window.location.href = url; }, 520);
@@ -620,7 +622,7 @@
         b.addEventListener('pointerdown', function (e) {
           e.preventDefault();
           var r = b.getBoundingClientRect();
-          playPopSound();
+          playPopSound(r.width);
           countPoppedBubble();
           burst(r.left + r.width / 2, r.top + r.height / 2, r.width / 2);
           b.remove();
